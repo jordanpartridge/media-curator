@@ -36,7 +36,7 @@ class RadarrService
     public function deleteMovie(int $id, bool $deleteFiles = true): void
     {
         Http::timeout(10)
-            ->get("{$this->baseUrl}/api/v3/movie/{$id}?apikey={$this->apiKey}&deleteFiles=" . ($deleteFiles ? 'true' : 'false'));
+            ->get("{$this->baseUrl}/api/v3/movie/{$id}?apikey={$this->apiKey}&deleteFiles=".($deleteFiles ? 'true' : 'false'));
     }
 
     public function lookupByTmdb(int $tmdbId): array

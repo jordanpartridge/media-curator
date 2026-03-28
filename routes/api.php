@@ -1,5 +1,6 @@
 <?php
 
+use App\Agent\CriterionAgent;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
@@ -19,7 +20,7 @@ Route::post('/prompt', function (Request $request): JsonResponse {
         'conversation_id' => 'nullable|string',
     ]);
 
-    $agent = app(\App\Agent\CriterionAgent::class);
+    $agent = app(CriterionAgent::class);
 
     $response = $agent->respond($validated['message'], $validated['conversation_id'] ?? null);
 
