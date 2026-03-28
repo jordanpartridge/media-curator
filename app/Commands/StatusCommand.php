@@ -3,7 +3,7 @@
 namespace App\Commands;
 
 use Illuminate\Support\Facades\Http;
-use LaravelZero\Framework\Commands\Command;
+use Illuminate\Console\Command;
 
 class StatusCommand extends Command
 {

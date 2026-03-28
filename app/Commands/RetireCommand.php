@@ -4,7 +4,7 @@ namespace App\Commands;
 
 use App\Services\JellyfinService;
 use App\Services\RadarrService;
-use LaravelZero\Framework\Commands\Command;
+use Illuminate\Console\Command;
 
 class RetireCommand extends Command
 {

@@ -2,22 +2,19 @@
 
 namespace App\Providers;
 
+use App\Agent\CriterionAgent;
+use App\Services\QdrantService;
 use Illuminate\Support\ServiceProvider;
 
 class AppServiceProvider extends ServiceProvider
 {
-    /**
-     * Bootstrap any application services.
-     */
-    public function boot(): void
+    public function register(): void
     {
-        //
+        $this->app->singleton(QdrantService::class);
+        $this->app->singleton(CriterionAgent::class);
     }
 
-    /**
-     * Register any application services.
-     */
-    public function register(): void
+    public function boot(): void
     {
         //
     }
