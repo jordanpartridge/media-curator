@@ -1,4 +1,5 @@
 /vendor
+/bootstrap/cache
 /.idea
 /.vscode
 /.vagrant
