@@ -13,6 +13,13 @@ return [
         'url' => env('JELLYFIN_URL', 'http://100.68.122.24:8096'),
         'api_key' => env('JELLYFIN_API_KEY'),
     ],
+    'prowlarr' => [
+        'url' => env('PROWLARR_URL', 'http://100.68.211.1:9696'),
+        'api_key' => env('PROWLARR_API_KEY'),
+    ],
+    'transmission' => [
+        'url' => env('TRANSMISSION_URL', 'http://100.68.122.24:9091'),
+    ],
     'ollama' => [
         'url' => env('OLLAMA_URL', 'http://100.68.122.24:11434'),
         'model' => env('OLLAMA_MODEL', 'llama3.2:3b'),
