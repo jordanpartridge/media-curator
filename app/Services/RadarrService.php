@@ -39,6 +39,11 @@ class RadarrService
             ->get("{$this->baseUrl}/api/v3/movie/{$id}?apikey={$this->apiKey}&deleteFiles=".($deleteFiles ? 'true' : 'false'));
     }
 
+    public function lookup(string $term): array
+    {
+        return $this->get('/api/v3/movie/lookup?term='.urlencode($term));
+    }
+
     public function lookupByTmdb(int $tmdbId): array
     {
         return $this->get("/api/v3/movie/lookup/tmdb?tmdbId={$tmdbId}");

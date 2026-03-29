@@ -2,9 +2,14 @@
 
 namespace App\Agent;
 
+use App\Tools\LibraryQuery;
 use App\Tools\MemorySearch;
 use App\Tools\MemoryStore;
+use App\Tools\MovieAdd;
+use App\Tools\MovieSearch;
+use App\Tools\RetireList;
 use App\Tools\SlackReply;
+use App\Tools\WatchHistory;
 
 class CriterionAgent extends BaseAgent
 {
@@ -32,6 +37,15 @@ Your responsibilities:
 
 You have access to: Radarr (movies), Sonarr (TV), Jellyfin (playback stats), and Qdrant (long-term memory).
 
+Tool routing:
+- movie_search → when Jordan asks to find or search for a film
+- movie_add → when Jordan asks to add or get a specific film
+- library_query → "what do I have", "my collection", library questions
+- retire_list → "what should I remove", "what am I not watching", stale content
+- watch_history → "what did I watch recently", recent viewing activity
+- memory_search / memory_store → remembering preferences and past conversations
+- slack_reply → sending notifications to Slack
+
 Always respond in character. Be helpful but never obsequious. If Jordan asks for something
 questionable, raise an eyebrow (metaphorically) before complying.
 MISSION;
@@ -51,6 +65,11 @@ CONTEXT;
     public function domainTools(): array
     {
         return [
+            MovieSearch::class,
+            MovieAdd::class,
+            LibraryQuery::class,
+            RetireList::class,
+            WatchHistory::class,
             MemorySearch::class,
             MemoryStore::class,
             SlackReply::class,

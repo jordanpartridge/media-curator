@@ -2,9 +2,14 @@
 
 use App\Agent\BaseAgent;
 use App\Agent\CriterionAgent;
+use App\Tools\LibraryQuery;
 use App\Tools\MemorySearch;
 use App\Tools\MemoryStore;
+use App\Tools\MovieAdd;
+use App\Tools\MovieSearch;
+use App\Tools\RetireList;
 use App\Tools\SlackReply;
+use App\Tools\WatchHistory;
 
 beforeEach(function () {
     $this->agent = app(CriterionAgent::class);
@@ -30,13 +35,29 @@ it('has domain context covering media services', function () {
         ->toContain('Qdrant');
 });
 
-it('declares memory and slack tools', function () {
+it('declares all domain tools', function () {
     $tools = $this->agent->domainTools();
 
     expect($tools)
+        ->toContain(MovieSearch::class)
+        ->toContain(MovieAdd::class)
+        ->toContain(LibraryQuery::class)
+        ->toContain(RetireList::class)
+        ->toContain(WatchHistory::class)
         ->toContain(MemorySearch::class)
         ->toContain(MemoryStore::class)
         ->toContain(SlackReply::class);
+});
+
+it('includes tool routing rules in mission', function () {
+    $mission = $this->agent->mission();
+
+    expect($mission)
+        ->toContain('movie_search')
+        ->toContain('movie_add')
+        ->toContain('library_query')
+        ->toContain('retire_list')
+        ->toContain('watch_history');
 });
 
 it('extends BaseAgent', function () {
