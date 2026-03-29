@@ -27,7 +27,7 @@ return [
         'production' => [
             'criterion-workers' => [
                 'connection' => 'redis',
-                'queue' => ['default', 'criterion'],
+                'queue' => ['default', 'criterion', 'media'],
                 'balance' => 'auto',
                 'processes' => 3,
                 'tries' => 3,
@@ -37,7 +37,7 @@ return [
         'local' => [
             'criterion-workers' => [
                 'connection' => 'redis',
-                'queue' => ['default', 'criterion'],
+                'queue' => ['default', 'criterion', 'media'],
                 'balance' => 'auto',
                 'processes' => 1,
                 'tries' => 3,
