@@ -65,6 +65,11 @@ class QdrantService
 
     public function search(string $query, int $limit = 5): array
     {
+        return $this->searchCollection($this->collection, $query, $limit);
+    }
+
+    public function searchCollection(string $collection, string $query, int $limit = 5): array
+    {
         $vector = $this->embed($query);
 
         if (! $vector) {
@@ -72,7 +77,7 @@ class QdrantService
         }
 
         $response = Http::post(
-            "{$this->baseUrl}/collections/{$this->collection}/points/search",
+            "{$this->baseUrl}/collections/{$collection}/points/search",
             [
                 'vector' => $vector,
                 'limit' => $limit,
@@ -81,7 +86,10 @@ class QdrantService
         );
 
         if (! $response->successful()) {
-            Log::warning('Qdrant search failed', ['status' => $response->status()]);
+            Log::warning('Qdrant search failed', [
+                'collection' => $collection,
+                'status' => $response->status(),
+            ]);
 
             return [];
         }
