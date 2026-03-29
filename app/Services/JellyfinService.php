@@ -50,6 +50,21 @@ class JellyfinService
     }
 
     /**
+     * Get recently watched items within a given number of days.
+     */
+    public function getWatchHistory(string $type = 'Movie', int $days = 7): array
+    {
+        $cutoff = now()->subDays($days)->toIso8601String();
+        $items = $this->getItems($type);
+
+        return array_values(array_filter($items, function (array $item) use ($cutoff): bool {
+            $lastPlayed = $item['UserData']['LastPlayedDate'] ?? '';
+
+            return $lastPlayed !== '' && $lastPlayed >= $cutoff;
+        }));
+    }
+
+    /**
      * Get items added before a given date that remain unwatched.
      */
     public function getStaleItems(string $type = 'Movie', int $olderThanDays = 90): array
