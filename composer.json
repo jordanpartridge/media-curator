@@ -1,29 +1,26 @@
 {
-    "name": "laravel-zero/laravel-zero",
-    "description": "The Laravel Zero Framework.",
-    "keywords": ["framework", "laravel", "laravel zero", "console", "cli"],
-    "homepage": "https://laravel-zero.com",
+    "name": "jordanpartridge/media-curator",
+    "description": "Criterion — AI-powered media library curation agent.",
+    "keywords": ["agent", "laravel", "media", "curation", "ai"],
     "type": "project",
     "license": "MIT",
-    "support": {
-        "issues": "https://github.com/laravel-zero/laravel-zero/issues",
-        "source": "https://github.com/laravel-zero/laravel-zero"
-    },
     "authors": [
         {
-            "name": "Nuno Maduro",
-            "email": "enunomaduro@gmail.com"
+            "name": "Jordan Partridge",
+            "email": "jordan@partridge.rocks"
         }
     ],
     "require": {
         "php": "^8.2",
-        "illuminate/http": "*",
-        "illuminate/redis": "*",
-        "laravel-zero/framework": "^12.0.2",
+        "laravel/framework": "^13.0",
+        "laravel/octane": "^2.0",
+        "laravel/horizon": "^5.0",
+
         "predis/predis": "^3.3",
         "prism-php/prism": "^0.99.19"
     },
     "require-dev": {
+        "fakerphp/faker": "^1.23",
         "laravel/pint": "^1.25.1",
         "mockery/mockery": "^1.6.12",
         "pestphp/pest": "^3.8.4|^4.1.2"
@@ -40,15 +37,29 @@
             "Tests\\": "tests/"
         }
     },
+    "scripts": {
+        "post-autoload-dump": [
+            "Illuminate\\Foundation\\ComposerScripts::postAutoloadDump",
+            "@php artisan package:discover --ansi"
+        ],
+        "post-update-cmd": [
+            "@php artisan vendor:publish --tag=laravel-assets --ansi --force"
+        ]
+    },
+    "extra": {
+        "laravel": {
+            "dont-discover": []
+        }
+    },
     "config": {
         "preferred-install": "dist",
         "sort-packages": true,
         "optimize-autoloader": true,
         "allow-plugins": {
-            "pestphp/pest-plugin": true
+            "pestphp/pest-plugin": true,
+            "php-http/discovery": true
         }
     },
-    "minimum-stability": "stable",
-    "prefer-stable": true,
-    "bin": ["application"]
+    "minimum-stability": "dev",
+    "prefer-stable": true
 }

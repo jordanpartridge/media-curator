@@ -4,7 +4,7 @@ namespace App\Commands;
 
 use App\Services\JellyfinService;
 use App\Services\RadarrService;
-use LaravelZero\Framework\Commands\Command;
+use Illuminate\Console\Command;
 use Prism\Prism\Enums\Provider;
 use Prism\Prism\Facades\Prism;
 
@@ -42,11 +42,11 @@ class RecommendCommand extends Command
 
         try {
             $movies = $radarr->getMovies();
-            $titles = array_slice(array_map(fn ($m) => $m['title'] . ' (' . ($m['year'] ?? '?') . ')', $movies), 0, 30);
-            $lines[] = 'Current movies in library (' . count($movies) . ' total, showing 30):';
+            $titles = array_slice(array_map(fn ($m) => $m['title'].' ('.($m['year'] ?? '?').')', $movies), 0, 30);
+            $lines[] = 'Current movies in library ('.count($movies).' total, showing 30):';
             $lines[] = implode(', ', $titles);
         } catch (\Throwable $e) {
-            $lines[] = 'Could not fetch Radarr library: ' . $e->getMessage();
+            $lines[] = 'Could not fetch Radarr library: '.$e->getMessage();
         }
 
         try {
@@ -54,7 +54,7 @@ class RecommendCommand extends Command
             $recentWatched = array_filter($watched, fn ($i) => ($i['UserData']['PlayCount'] ?? 0) > 0);
             if (! empty($recentWatched)) {
                 $watchedTitles = array_map(fn ($i) => $i['Name'] ?? 'Unknown', array_slice($recentWatched, 0, 15));
-                $lines[] = "\nRecently watched: " . implode(', ', $watchedTitles);
+                $lines[] = "\nRecently watched: ".implode(', ', $watchedTitles);
             }
         } catch (\Throwable) {
             // Jellyfin unavailable — proceed without watch data
@@ -65,7 +65,7 @@ class RecommendCommand extends Command
 
     private function generateRecommendations(string $libraryContext, int $movieCount, int $showCount): string
     {
-        $systemPrompt = <<<PROMPT
+        $systemPrompt = <<<'PROMPT'
 You are a media curator for a home theater system. Analyze the user's library
 and viewing patterns, then recommend new content they would enjoy.
 
