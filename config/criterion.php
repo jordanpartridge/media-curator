@@ -8,6 +8,7 @@ return [
         'host' => env('QDRANT_HOST', 'localhost'),
         'port' => (int) env('QDRANT_PORT', 6333),
         'collection' => env('QDRANT_COLLECTION', 'criterion_memory'),
+        'lexi_collection' => env('QDRANT_LEXI_COLLECTION', 'lexi_memory'),
         'dimension' => (int) env('QDRANT_DIMENSION', 1536),
     ],
 
